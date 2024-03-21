@@ -1,0 +1,35 @@
+class Solution {
+    public List<String> letterCasePermutation(String s) {
+        List<String> ans = new ArrayList<>();
+        StringBuilder str = new StringBuilder();
+        lCP(s, 0, str, ans);
+        return ans;
+    }
+
+    private static void lCP(String s, int ind, StringBuilder str, List<String> ans){
+        if (ind == s.length()){
+            ans.add(str.toString());
+            return;
+        }
+
+        if (s.charAt(ind) >= '0' && s.charAt(ind) <= '9'){
+            str.append(s.charAt(ind));
+            lCP(s, ind+1, str, ans);
+            str.deleteCharAt(str.length()-1);
+        } else{
+            str.append(s.charAt(ind));
+            lCP(s, ind+1, str, ans);
+            str.deleteCharAt(str.length()-1);
+            
+            if (s.charAt(ind) >= 'a' && s.charAt(ind) <= 'z'){
+                str.append((char)(s.charAt(ind)-32));
+                lCP(s, ind+1, str, ans);
+                str.deleteCharAt(str.length()-1);
+            } else{
+                str.append((char)(s.charAt(ind)+32));
+                lCP(s, ind+1, str, ans);
+                str.deleteCharAt(str.length()-1);
+            }
+        }
+    }
+}
